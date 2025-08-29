@@ -1,0 +1,30 @@
+import express from "express"; //nap express
+import bodyParser from "body-parser"; //nap body-parser lấy tham số từ client /user?id=7
+import viewEngine from "./config/viewEngine"; //nạp viewEngine
+import initWebRoutes from './route/web'; //nap file web từ Route
+import connectDB from './config/configdb';
+import dotenv from 'dotenv';
+
+dotenv.config(); //gọi hàm config của dotenv để chạy lệnh process.env.PORT
+
+const app = express();
+
+//config app
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }))
+viewEngine (app);
+initWebRoutes (app);
+connectDB();
+
+const port = process.env.PORT || 8088; //tạo tham số port lấy từ .env
+//Port === undefined => port = 6969
+//chạy server
+app.listen(port, () => {
+    //callback
+    console.log("Backend Nodejs is runing on the port: "+ port)
+})
+
+
+
+
+
